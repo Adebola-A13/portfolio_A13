@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title> Web & IA</title>
+        <link rel="icon" href="images/favicon.png" type="image/png">
+        <script src="https://cdn.tailwindcss.com"></script>
+        <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+        <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.globe.min.js"></script>
+        <style>
+            .hero-gradient {
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            }
+            .skill-card:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            }
+            #vanta-bg {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                z-index: 0;
+            }
+            .content-overlay {
+                position: relative;
+                z-index: 1;
+            }
+            
+            /* Styles pour le menu mobile */
+            .mobile-menu {
+                transform: translateX(100%);
+                transition: transform 0.3s ease-in-out;
+            }
+            .mobile-menu.open {
+                transform: translateX(0);
+            }
+            .menu-backdrop {
+                opacity: 0;
+                visibility: hidden;
+                transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+            }
+            .menu-backdrop.open {
+                opacity: 1;
+                visibility: visible;
+            }
+        </style>
+    </head>
+    
+    <body class="font-sans antialiased text-gray-800">
+        <div id="vanta-bg"></div>
+        
+        <!-- Navigation -->
+        <header class="bg-gray-900 relative z-50">
+            <nav aria-label="Global" class="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8">
+                <div class="flex lg:flex-1">
+                    <a href="#" class="-m-1.5 p-1.5">
+                        <span class="sr-only">Portfolio | DevAI</span>
+                        <span class="text-2xl font-bold text-white">Portfolio | DevAI</span>
+                    </a>
+                </div>
+                <div class="flex lg:hidden">
+                    <button type="button" id="mobile-menu-button" class="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500">
+                        <span class="sr-only">Open main menu</span>
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+                        </svg>
+                    </button>
+                </div>
+                <div class="hidden lg:flex lg:gap-x-8">
+                    <a href="#about" class="text-sm font-medium leading-6 text-white hover:text-indigo-400 transition">À propos</a>
+                    <a href="#skills" class="text-sm font-medium leading-6 text-white hover:text-indigo-400 transition">Compétences</a>
+                    <a href="#projects" class="text-sm font-medium leading-6 text-white hover:text-indigo-400 transition">Projets</a>
+                    <a href="#contact" class="text-sm font-medium leading-6 text-white hover:text-indigo-400 transition">Contact</a>
+                </div>
+            </nav>
+
+            <!-- Mobile Menu -->
+            <div id="mobile-menu-backdrop" class="menu-backdrop fixed inset-0 bg-black bg-opacity-50 lg:hidden z-40">
+                <div id="mobile-menu" class="mobile-menu fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-gray-900 p-6 sm:max-w-sm">
+                    <div class="flex items-center justify-between">
+                        <a href="#" class="-m-1.5 p-1.5">
+                            <span class="sr-only">Portfolio | DevAI</span>
+                            <span class="text-2xl font-bold text-white">Portfolio | DevAI</span>
+                        </a>
+                        <button type="button" id="mobile-menu-close" class="-m-2.5 rounded-md p-2.5 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500">
+                            <span class="sr-only">Close menu</span>
+                            <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="mt-6 flow-root">
+                        <div class="-my-6 divide-y divide-gray-700">
+                            <div class="space-y-2 py-6">
+                                <a href="#about" class="mobile-menu-link -mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-white hover:bg-gray-800">À propos</a>
+                                <a href="#skills" class="mobile-menu-link -mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-white hover:bg-gray-800">Compétences</a>
+                                <a href="#projects" class="mobile-menu-link -mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-white hover:bg-gray-800">Projets</a>
+                                <a href="#contact" class="mobile-menu-link -mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-white hover:bg-gray-800">Contact</a>
+                            </div>
+                            <!-- Section pour les réseaux sociaux ou contact rapide -->
+                            <div class="py-6">
+                                <div class="flex space-x-6 justify-center">
+                                    <a href="https://github.com/Adebola-A13" class="text-gray-400 hover:text-white transition">
+                                        <i data-feather="github" class="h-6 w-6"></i>
+                                    </a>
+                                    <a href="https://www.linkedin.com/in/adehan-ibrahim-126675355/" class="text-gray-400 hover:text-white transition">
+                                        <i data-feather="linkedin" class="h-6 w-6"></i>
+                                    </a>
+                                    <a href="mailto:aeman.adehan@gmail.com,ibrahim.adehan@imsp-uac.org" class="text-gray-400 hover:text-white transition">
+                                        <i data-feather="mail" class="h-6 w-6"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Hero Section -->
+        <section class="hero-gradient text-white min-h-screen flex items-center relative overflow-hidden">
+            <div class="content-overlay container mx-auto px-4 sm:px-6 py-12 sm:py-16 md:py-20">
+                <div class="flex flex-col md:flex-row items-center gap-8 md:gap-12">
+                    <div class="w-full md:w-2/3 text-center md:text-left" data-aos="fade-right">
+                        <div class="mb-4 sm:mb-6">
+                            <p class="text-sm sm:text-base md:text-lg opacity-80 mb-2">Bonjour, je suis</p>
+                            <h2 class="text-xl sm:text-2xl md:text-3xl font-semibold mb-2 text-yellow-300">ADEHAN Aéman Ibrahim Ulrich</h2>
+                        </div>
+                        <h1 class="text-2xl sm:text-3xl md:text-4xl lg:text-6xl font-bold mb-4 sm:mb-6 leading-tight">Développeur Web & IA Passionné</h1>
+                        <p class="text-base sm:text-lg md:text-xl lg:text-2xl mb-6 sm:mb-8 opacity-90 leading-relaxed max-w-2xl mx-auto md:mx-0">Je crée des solutions innovantes en combinant développement web, intelligence artificielle et outils no-code.</p>
+                        <div class="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center md:justify-start">
+                            <a href="#projects" class="bg-white text-indigo-600 px-6 sm:px-8 py-3 rounded-full font-semibold hover:bg-gray-100 transition duration-300 text-sm sm:text-base">Voir mes projets</a>
+                            <a href="#contact" class="border-2 border-white text-white px-6 sm:px-8 py-3 rounded-full font-semibold hover:bg-white hover:text-indigo-600 transition duration-300 text-sm sm:text-base">Me contacter</a>
+                        </div>
+                    </div>
+                    <div class="w-full md:w-1/3 mt-8 md:mt-0" data-aos="fade-left">
+                        <div class="w-full max-w-xs sm:max-w-sm lg:max-w-md mx-auto">
+                            <img src="images/photo.jpeg" alt="Photo du développeur" class="rounded-xl shadow-2xl w-full h-auto object-cover">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about" class="py-12 sm:py-16 md:py-20 bg-gray-50">
+            <div class="container mx-auto px-4 sm:px-6">
+                <div class="text-center mb-12 sm:mb-16" data-aos="fade-up">
+                    <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold mb-4">À propos de moi</h2>
+                    <div class="w-16 sm:w-20 h-1 bg-indigo-600 mx-auto"></div>
+                </div>
+                <div class="flex flex-col md:flex-row items-center gap-8 md:gap-12">
+                    <div class="w-full md:w-1/3" data-aos="fade-right">
+                        <div class="w-full max-w-xs sm:max-w-sm mx-auto">
+                            <img src="images/photo_2.jpeg" alt="Photo du développeur" class="rounded-xl shadow-2xl w-full h-auto object-cover aspect-square">
+                        </div>
+                    </div>
+                    <div class="w-full md:w-2/3" data-aos="fade-left">
+                        <h3 class="text-xl sm:text-2xl font-semibold mb-4 text-center md:text-left">Passionné par la technologie et l'innovation</h3>
+                        <p class="text-gray-600 mb-4 sm:mb-6 text-sm sm:text-base leading-relaxed">Développeur web avec une forte curiosité pour l'intelligence artificielle et les solutions no-code. Je combine ces domaines pour créer des applications performantes et accessibles.</p>
+                        <p class="text-gray-600 mb-6 sm:mb-8 text-sm sm:text-base leading-relaxed">Autodidacte et toujours en quête d'apprentissage, je me forme constamment aux nouvelles technologies pour proposer des solutions modernes et adaptées.</p>
+                        <div class="flex flex-col sm:flex-row sm:flex-wrap gap-3 sm:gap-4">
+                            <div class="flex items-center justify-center sm:justify-start">
+                                <i data-feather="code" class="mr-2 text-indigo-600 w-4 h-4 sm:w-5 sm:h-5"></i>
+                                <span class="text-sm sm:text-base">Développement Web</span>
+                            </div>
+                            <div class="flex items-center justify-center sm:justify-start">
+                                <i data-feather="cpu" class="mr-2 text-indigo-600 w-4 h-4 sm:w-5 sm:h-5"></i>
+                                <span class="text-sm sm:text-base">Intelligence Artificielle</span>
+                            </div>
+                            <div class="flex items-center justify-center sm:justify-start">
+                                <i data-feather="zap" class="mr-2 text-indigo-600 w-4 h-4 sm:w-5 sm:h-5"></i>
+                                <span class="text-sm sm:text-base">Solutions No-Code</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Skills Section -->
+        <section id="skills" class="py-20 bg-white">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-16" data-aos="fade-up">
+                    <h2 class="text-3xl md:text-4xl font-bold mb-4">Mes Compétences</h2>
+                    <div class="w-20 h-1 bg-indigo-600 mx-auto"></div>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <!-- Web Development -->
+                    <div class="skill-card bg-gray-50 p-8 rounded-xl transition duration-300" data-aos="fade-up" data-aos-delay="100">
+                        <div class="text-indigo-600 mb-4">
+                            <i data-feather="code" class="w-10 h-10"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold mb-4">Développement Web</h3>
+                        <ul class="space-y-2 text-gray-600">
+                            <li class="flex items-center">
+                                <i data-feather="check" class="mr-2 text-green-500"></i>
+                                HTML5, CSS3, JavaScript
+                            </li>
+                            <li class="flex items-center">
+                                <i data-feather="check" class="mr-2 text-green-500"></i>
+                                React, Vue.js, TailwindCSS, Laravel, Symfony
+                            </li>
+                            <li class="flex items-center">
+                                <i data-feather="check" class="mr-2 text-green-500"></i>
+                                Node.js, Express (toujours en apprentissage)
+                            </li>
+                            <li class="flex items-center">
+                                <i data-feather="check" class="mr-2 text-green-500"></i>
+                                Bases de données SQL/NoSQL
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- AI Development -->
+                    <div class="skill-card bg-gray-50 p-8 rounded-xl transition duration-300" data-aos="fade-up" data-aos-delay="200">
+                        <div class="text-indigo-600 mb-4">
+                            <i data-feather="cpu" class="w-10 h-10"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold mb-4">Intelligence Artificielle</h3>
+                        <ul class="space-y-2 text-gray-600">
+                            <li class="flex items-center">
+                                <i data-feather="check" class="mr-2 text-green-500"></i>
+                                Python pour le Machine Learning
+                            </li>
+                            <li class="flex items-center">
+                                <i data-feather="check" class="mr-2 text-green-500"></i>
+                                TensorFlow, PyTorch (en cours d'apprentissage)
+                            </li>
+                            <li class="flex items-center">
+                                <i data-feather="check" class="mr-2 text-green-500"></i>
+                                Traitement du langage naturel
+                            </li>
+                            <li class="flex items-center">
+                                <i data-feather="check" class="mr-2 text-green-500"></i>
+                                Intégration d'API IA
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- No-Code -->
+                    <div class="skill-card bg-gray-50 p-8 rounded-xl transition duration-300" data-aos="fade-up" data-aos-delay="300">
+                        <div class="text-indigo-600 mb-4">
+                            <i data-feather="zap" class="w-10 h-10"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold mb-4">Solutions No-Code</h3>
+                        <ul class="space-y-2 text-gray-600">
+                            <li class="flex items-center">
+                                <i data-feather="check" class="mr-2 text-green-500"></i>
+                                Webflow, glideapps
+                            </li>
+                            <li class="flex items-center">
+                                <i data-feather="check" class="mr-2 text-green-500"></i>
+                                Automatisation de workflows (niveau intermédiaire)
+                            </li>
+                            <li class="flex items-center">
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Projects Section -->
+        <section id="projects" class="py-20 bg-gray-50">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-16" data-aos="fade-up">
+                    <h2 class="text-3xl md:text-4xl font-bold mb-4">Mes Projets</h2>
+                    <div class="w-20 h-1 bg-indigo-600 mx-auto"></div>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Project 1 -->
+                    <div class="bg-white rounded-xl overflow-hidden shadow-lg transition duration-300 hover:shadow-xl" data-aos="fade-up" data-aos-delay="100">
+                        <div class="w-full h-48 bg-gradient-to-br from-indigo-500 to-purple-600 overflow-hidden">
+                            <img src="images/project_1.png" alt="Assistant IA" class="w-full h-full object-cover object-top">
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-semibold mb-2">CLIMAGLOBE</h3>
+                            <p class="text-gray-600 mb-4">Platforme pour explorez les pays et leurs conditions météorologiques en temps réel.</p>
+                            <div class="flex flex-wrap gap-2 mb-4">
+                                <span class="bg-indigo-100 text-indigo-800 text-xs px-3 py-1 rounded-full">Vue.js</span>
+                                <span class="bg-indigo-100 text-indigo-800 text-xs px-3 py-1 rounded-full">TailwindCSS</span>
+                                <span class="bg-indigo-100 text-indigo-800 text-xs px-3 py-1 rounded-full">Api IA</span>
+                                <span class="bg-indigo-100 text-indigo-800 text-xs px-3 py-1 rounded-full">Api rest grauit</span>
+                            </div>
+                            <a href="https://github.com/Adebola-A13/Clima-Globe" class="text-indigo-600 font-medium flex items-center mb-2">
+                                code source <i data-feather="arrow-right" class="ml-2 w-4 h-4"></i>
+                            </a>
+                            <a href="https://climaglobe.vercel.app/" class="text-indigo-600 font-medium flex items-center">
+                                lien du site <i data-feather="arrow-right" class="ml-2 w-4 h-4"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Project 2 -->
+                    <div class="bg-white rounded-xl overflow-hidden shadow-lg transition duration-300 hover:shadow-xl" data-aos="fade-up" data-aos-delay="200">
+                        <div class="w-full h-48 bg-gradient-to-br from-indigo-500 to-purple-600 overflow-hidden">
+                            <img src="images/project_2.png" alt="Plateforme laravele" class="w-full h-full object-cover object-top">
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-semibold mb-2">Plateforme laravele SeminarHub</h3>
+                            <p class="text-gray-600 mb-4">Solution pour créer une gestion de séminaires en ligne dans une université. Avec ça tous le monde est au cours des nouveaux séminaires programmer, peuvent téléchanger les documents de séminaires passé et autres .</p>
+                            <div class="flex flex-wrap gap-2 mb-4">
+                                <span class="bg-indigo-100 text-indigo-800 text-xs px-3 py-1 rounded-full">Blade</span>
+                                <span class="bg-indigo-100 text-indigo-800 text-xs px-3 py-1 rounded-full">PHP</span>
+                                <span class="bg-indigo-100 text-indigo-800 text-xs px-3 py-1 rounded-full">JavaScript</span>
+                                <span class="bg-indigo-100 text-indigo-800 text-xs px-3 py-1 rounded-full">CSS3</span>
+                            </div>
+                            <a href="https://github.com/Adebola-A13/SeminarHub" class="text-indigo-600 font-medium inline-flex items-center">
+                                code source <i data-feather="arrow-right" class="ml-2 w-4 h-4"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Project 3 -->
+                    <div class="bg-white rounded-xl overflow-hidden shadow-lg transition duration-300 hover:shadow-xl" data-aos="fade-up" data-aos-delay="300">
+                        <div class="w-full h-48 bg-gradient-to-br from-indigo-500 to-purple-600 overflow-hidden">
+                            <img src="images/project_3.png" alt="Assistant IA" class="w-full h-full object-cover object-top">
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-semibold mb-2">vote-miss</h3>
+                            <p class="text-gray-600 mb-4">Une plateforme de vote en ligne conçue pour permettre aux étudiants de l'IMSP de voter facilement pour leurs candidats.</p>
+                            <p class="text-gray-600 mb-4">Sur une autre platforme j'affiche les résultats des votes pour les membres du 3CPI.</p>
+                            <div class="flex flex-wrap gap-2 mb-4">
+                                <span class="bg-indigo-100 text-indigo-800 text-xs px-3 py-1 rounded-full">HTML5</span>
+                                <span class="bg-indigo-100 text-indigo-800 text-xs px-3 py-1 rounded-full">CSS3</span>
+                                <span class="bg-indigo-100 text-indigo-800 text-xs px-3 py-1 rounded-full">JavaScript</span>
+                                <span class="bg-indigo-100 text-indigo-800 text-xs px-3 py-1 rounded-full">phpmyadmin</span>
+                            </div>
+                            <a href="https://github.com/Adebola-A13/vote-miss" class="text-indigo-600 font-medium flex items-center mb-2">
+                                code source <i data-feather="arrow-right" class="ml-2 w-4 h-4"></i>
+                            </a>
+                            <a href="https://vote-miss.vercel.app/" class="text-indigo-600 font-medium flex items-center">
+                                lien du site <i data-feather="arrow-right" class="ml-2 w-4 h-4"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section 
+         <section id="contact" class="py-20 bg-indigo-600 text-white">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-16" data-aos="fade-up">
+                    <h2 class="text-3xl md:text-4xl font-bold mb-4">Contactez-moi</h2>
+                    <div class="w-20 h-1 bg-white mx-auto"></div>
+                </div>
+                <div class="max-w-2xl mx-auto">
+                    <form class="space-y-6" data-aos="fade-up" data-aos-delay="100">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label for="name" class="block mb-2">Votre nom</label>
+                                <input type="text" id="name" class="w-full px-4 py-3 rounded-lg bg-indigo-500 border border-indigo-400 focus:outline-none focus:ring-2 focus:ring-white focus:border-transparent placeholder-indigo-200" placeholder="Jean Dupont">
+                            </div>
+                            <div>
+                                <label for="email" class="block mb-2">Votre email</label>
+                                <input type="email" id="email" class="w-full px-4 py-3 rounded-lg bg-indigo-500 border border-indigo-400 focus:outline-none focus:ring-2 focus:ring-white focus:border-transparent placeholder-indigo-200" placeholder="jean@exemple.com">
+                            </div>
+                        </div>
+                        <div>
+                            <label for="subject" class="block mb-2">Sujet</label>
+                            <input type="text" id="subject" class="w-full px-4 py-3 rounded-lg bg-indigo-500 border border-indigo-400 focus:outline-none focus:ring-2 focus:ring-white focus:border-transparent placeholder-indigo-200" placeholder="Objet de votre message">
+                        </div>
+                        <div>
+                            <label for="message" class="block mb-2">Votre message</label>
+                            <textarea id="message" rows="5" class="w-full px-4 py-3 rounded-lg bg-indigo-500 border border-indigo-400 focus:outline-none focus:ring-2 focus:ring-white focus:border-transparent placeholder-indigo-200" placeholder="Dites-moi comment je peux vous aider..."></textarea>
+                        </div>
+                        <button type="submit" class="w-full bg-white text-indigo-600 px-6 py-3 rounded-lg font-semibold hover:bg-gray-100 transition duration-300">
+                            Envoyer le message
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </section> --->
+
+        <!-- Contact Section -->
+        <section id="contact" class="py-20 bg-indigo-600 text-white">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-16" data-aos="fade-up">
+                    <h2 class="text-3xl md:text-4xl font-bold mb-4">Contactez-moi</h2>
+                    <div class="w-20 h-1 bg-white mx-auto"></div>
+                </div>
+                <div class="flex flex-col sm:flex-row justify-center items-center gap-6" data-aos="fade-up" data-aos-delay="100">
+                    <!-- WhatsApp -->
+                    <a href="https://wa.me/22951015102" target="_blank" class="bg-green-500 hover:bg-green-600 text-white px-6 py-3 rounded-lg font-semibold transition duration-300 flex items-center gap-2">
+                        <i data-feather="message-circle" class="w-5 h-5"></i>
+                        WhatsApp
+                    </a>
+
+                    <!-- LinkedIn -->
+                    <a href="https://www.linkedin.com/in/adehan-ibrahim-126675355/" target="_blank" class="bg-blue-700 hover:bg-blue-800 text-white px-6 py-3 rounded-lg font-semibold transition duration-300 flex items-center gap-2">
+                        <i data-feather="linkedin" class="w-5 h-5"></i>
+                        LinkedIn
+                    </a>
+
+                    <!-- Email -->
+                    <a href="mailto:aeman.adehan@gmail.com,ibrahim.adehan@imsp-uac.org" class="bg-gray-800 hover:bg-gray-900 text-white px-6 py-3 rounded-lg font-semibold transition duration-300 flex items-center gap-2">
+                        <i data-feather="mail" class="w-5 h-5"></i>
+                        Email
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+
+        <footer class="bg-gray-900 text-white py-12">
+            <div class="container mx-auto px-6">
+                <div class="flex flex-col md:flex-row justify-between items-center">
+                    <div class="mb-6 md:mb-0">
+                        <a href="#" class="text-2xl font-bold text-white">Portfolio | DevAI</a>
+                        <p class="mt-2 text-gray-400">Développement Web & Solutions IA</p>
+                    </div>
+                    <div class="flex space-x-6">
+                        <a href="https://github.com/Adebola-A13" class="text-gray-400 hover:text-white transition">
+                            <i data-feather="github"></i>
+                        </a>
+                        <a href="https://www.linkedin.com/in/adehan-ibrahim-126675355/" class="text-gray-400 hover:text-white transition">
+                            <i data-feather="linkedin"></i>
+                        </a>
+                        <a href="mailto:aeman.adehan@gmail.com,ibrahim.adehan@imsp-uac.org" class="text-gray-400 hover:text-white transition">
+                            <i data-feather="mail"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
+                    <p>&copy; 2025 Portfolio | DevAI. Tous droits réservés.</p>
+                </div>
+            </div>
+        </footer>
+
+        <script src="script.js"></script>
+
+    </body>
+</html>
