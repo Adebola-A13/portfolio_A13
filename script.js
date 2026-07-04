@@ -1,90 +1,124 @@
-// Initialiser Vanta.js (fond globe)
-        if (typeof VANTA !== 'undefined') {
-            VANTA.GLOBE({
-                el: "#vanta-bg",
-                mouseControls: true,
-                touchControls: true,
-                gyroControls: false,
-                minHeight: 200.00,
-                minWidth: 200.00,
-                scale: 1.00,
-                scaleMobile: 1.00,
-                color: 0x667eea,
-                backgroundColor: 0x0,
-                size: 0.8
-            });
-        }
+// ── Scroll reveal ──────────────────────────────────────────────
+const revealObserver = new IntersectionObserver(
+  (entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        revealObserver.unobserve(entry.target);
+      }
+    });
+  },
+  { threshold: 0.12, rootMargin: '0px 0px -40px 0px' }
+);
 
-        // Initialiser les animations AOS
-        if (typeof AOS !== 'undefined') {
-            AOS.init({
-                duration: 800,
-                easing: 'ease-in-out',
-                once: true
-            });
-        }
+document.querySelectorAll('.reveal').forEach((el) => revealObserver.observe(el));
 
-        // Script pour le menu mobile
-        document.addEventListener('DOMContentLoaded', function() {
-            const mobileMenuButton = document.getElementById('mobile-menu-button');
-            const mobileMenuClose = document.getElementById('mobile-menu-close');
-            const mobileMenuBackdrop = document.getElementById('mobile-menu-backdrop');
-            const mobileMenu = document.getElementById('mobile-menu');
-            const mobileMenuLinks = document.querySelectorAll('.mobile-menu-link');
+// ── Mobile nav ─────────────────────────────────────────────────
+const navToggle = document.getElementById('nav-toggle');
+const mobileNav = document.getElementById('mobile-nav');
+const mobileLinks = document.querySelectorAll('.mobile-nav-link');
 
-            // Fonction pour ouvrir le menu
-            function openMobileMenu() {
-                mobileMenuBackdrop.classList.add('open');
-                mobileMenu.classList.add('open');
-                document.body.style.overflow = 'hidden';
-            }
+function openNav() {
+  mobileNav.classList.add('open');
+  navToggle.setAttribute('aria-expanded', 'true');
+  document.body.style.overflow = 'hidden';
+}
 
-            // Fonction pour fermer le menu
-            function closeMobileMenu() {
-                mobileMenuBackdrop.classList.remove('open');
-                mobileMenu.classList.remove('open');
-                document.body.style.overflow = '';
-            }
+function closeNav() {
+  mobileNav.classList.remove('open');
+  navToggle.setAttribute('aria-expanded', 'false');
+  document.body.style.overflow = '';
+}
 
-            // Event listeners
-            if (mobileMenuButton) {
-                mobileMenuButton.addEventListener('click', openMobileMenu);
-            }
+navToggle.addEventListener('click', () =>
+  mobileNav.classList.contains('open') ? closeNav() : openNav()
+);
 
-            if (mobileMenuClose) {
-                mobileMenuClose.addEventListener('click', closeMobileMenu);
-            }
+mobileLinks.forEach((link) => link.addEventListener('click', closeNav));
 
-            // Fermer le menu si on clique sur le backdrop
-            if (mobileMenuBackdrop) {
-                mobileMenuBackdrop.addEventListener('click', function(e) {
-                    if (e.target === mobileMenuBackdrop) {
-                        closeMobileMenu();
-                    }
-                });
-            }
+// Close on backdrop click
+mobileNav.addEventListener('click', (e) => {
+  if (e.target === mobileNav) closeNav();
+});
 
-            // Fermer le menu si on clique sur un lien
-            mobileMenuLinks.forEach(link => {
-                link.addEventListener('click', closeMobileMenu);
-            });
+// Close on Escape
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape' && mobileNav.classList.contains('open')) closeNav();
+});
 
-            // Initialiser les icônes Feather
-            if (typeof feather !== 'undefined') {
-                feather.replace();
-            }
+// ── Active nav highlight ────────────────────────────────────────
+const sections = document.querySelectorAll('section[id]');
+const navLinks = document.querySelectorAll('.nav-links a[href^="#"]');
 
-            // Smooth scrolling pour les ancres
-            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-                anchor.addEventListener('click', function (e) {
-                    e.preventDefault();
-                    const target = document.querySelector(this.getAttribute('href'));
-                    if (target) {
-                        target.scrollIntoView({
-                            behavior: 'smooth',
-                            block: 'start'
-                        });
-                    }
-                });
-            });
+const sectionObserver = new IntersectionObserver(
+  (entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        navLinks.forEach((link) => {
+          link.style.color = link.getAttribute('href') === `#${entry.target.id}`
+            ? 'var(--text-0)'
+            : '';
         });
+      }
+    });
+  },
+  { rootMargin: '-30% 0px -60% 0px' }
+);
+
+sections.forEach((s) => sectionObserver.observe(s));
+
+// ── Smooth scroll for all anchor links ────────────────────────
+document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+  anchor.addEventListener('click', (e) => {
+    const target = document.querySelector(anchor.getAttribute('href'));
+    if (target) {
+      e.preventDefault();
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  });
+});
+
+// ── Video Modal ────────────────────────────────────────────────
+const videoTriggers = document.querySelectorAll('.video-trigger');
+const videoModal = document.getElementById('video-modal');
+const modalVideo = document.getElementById('modal-video');
+const closeModalBtn = document.getElementById('close-modal');
+
+if (videoModal && modalVideo) {
+  function openVideoModal(src) {
+    modalVideo.src = src;
+    videoModal.classList.add('active');
+    videoModal.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+    modalVideo.play();
+  }
+
+  function closeVideoModal() {
+    videoModal.classList.remove('active');
+    videoModal.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+    modalVideo.pause();
+    setTimeout(() => { modalVideo.src = ''; }, 300); // clear source after transition
+  }
+
+  videoTriggers.forEach(trigger => {
+    trigger.addEventListener('click', () => {
+      const src = trigger.getAttribute('data-video-src');
+      if (src) openVideoModal(src);
+    });
+  });
+
+  if (closeModalBtn) {
+    closeModalBtn.addEventListener('click', closeVideoModal);
+  }
+
+  // Close on backdrop click
+  videoModal.addEventListener('click', (e) => {
+    if (e.target === videoModal) closeVideoModal();
+  });
+
+  // Close on Escape
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && videoModal.classList.contains('active')) closeVideoModal();
+  });
+}
