@@ -1,0 +1,31 @@
+[
+ {
+  "shape": "narrative-workflow",
+  "theme": "studio",
+  "axes": "light/roman-serif/warm",
+  "hero": "banner",
+  "nav": "edge-aligned",
+  "footer": "colophon block",
+  "imagery": "screenshots 2 (capture.mjs) + user screenshots 3 + user portraits 2, natural",
+  "photos": [],
+  "entry": "index that opens",
+  "fingerprint": "banner/index/split/rows/switcher/split",
+  "sections": [
+   "hero wordmark construction",
+   "index (projects)",
+   "split (portrait)",
+   "rows (stages, band)",
+   "switcher (layers)",
+   "split (contact)",
+   "colophon"
+  ],
+  "signature": "the name measured live from the loaded font",
+  "waived": [
+   "39b",
+   "44c"
+  ],
+  "prompt": "portfolio développeur full-stack, ambition IA",
+  "date": "2026-10-31",
+  "mode": "build"
+ }
+]
