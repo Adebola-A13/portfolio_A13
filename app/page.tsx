@@ -1,194 +1,235 @@
 import Image from "next/image";
-import { Wordmark } from "@/components/Wordmark";
-import { WorkIndex } from "@/components/WorkIndex";
-import { LayerSwitcher } from "@/components/LayerSwitcher";
-import { layers, person, projects, stages } from "@/lib/content";
-import portrait from "@/images/photo.jpeg";
-import atWork from "@/images/photo_2.jpeg";
+import { Anatomy } from "@/components/Anatomy";
+import { person, projects, strata, trail } from "@/lib/content";
+import portrait from "@/images/portrait.png";
+import proofify from "@/images/work/proofify.png";
+import "@/styles/console/console.css";
 
 export default function Home() {
   return (
-    <>
+    <div className="theme-console">
       <a className="skip" href="#main">
         Aller au contenu
       </a>
 
-      <header className="masthead">
-        <nav className="nav container" aria-label="Navigation principale">
-          <a className="nav__mark" href="#top" aria-label="Ibrahim Adehan, accueil">
+      <header className="bar-wrap">
+        <nav className="bar" aria-label="Navigation principale">
+          <a className="bar__mark" href="#top" aria-label="Ibrahim Adehan, accueil">
             Ibrahim Adehan
           </a>
-          <ul className="nav__links">
+          <ul className="bar__links">
             <li>
               <a href="#projets">Projets</a>
             </li>
             <li>
-              <a href="#parcours">Parcours</a>
+              <a href="#registre">Parcours</a>
             </li>
             <li>
-              <a href="#outils">Outils</a>
+              <a href="#contact">Contact</a>
             </li>
           </ul>
-          <a className="btn btn--quiet nav__cta" href="#contact">
-            Me contacter
+          <a className="btn bar__cta" href={`mailto:${person.email}`}>
+            M&rsquo;écrire
           </a>
         </nav>
-
-        <section className="hero container" id="top" aria-labelledby="hero-title">
-          <Wordmark text={person.name} id="hero-title" />
-          <div className="hero__foot">
-            <p className="lead hero__lead">
-              Développeur full-stack au Bénin, je livre des SaaS en production.
-            </p>
-            <div className="hero__actions">
-              <a className="btn btn--primary" href={`mailto:${person.email}`}>
-                M&rsquo;écrire
-              </a>
-              <a className="btn" href="#projets">
-                Voir les projets
-              </a>
-            </div>
-          </div>
-        </section>
       </header>
 
       <main id="main">
-        <section className="section work-section" id="projets" aria-labelledby="projets-title">
-          <div className="container">
-            <h2 id="projets-title" className="section__head">
-              Cinq projets, quatre démos en ligne.
-            </h2>
-            <WorkIndex projects={projects} />
-          </div>
-        </section>
-
-        <section className="section about" aria-labelledby="about-title">
-          <div className="container about__grid">
-            <figure className="about__photo crop crop--sheet">
-              <div className="frame" data-slot="portrait" data-alt="Portrait d'Ibrahim Adehan">
-                <Image
-                  src={portrait}
-                  alt="Ibrahim Adehan en veste noire sur fond gris"
-                  fill
-                  sizes="(min-width: 60rem) 34vw, 100vw"
-                  style={{ objectPosition: "50% 20%" }}
-                />
-              </div>
-            </figure>
-            <div className="about__text">
-              <h2 id="about-title">Je construis le produit entier.</h2>
-              <p className="lead">
-                La base de données, l&rsquo;API, l&rsquo;interface, puis le déploiement. AviProfit, je l&rsquo;ai conçu
-                et livré seul.
+        <div id="top" />
+        <Anatomy
+          strata={strata}
+          face={proofify}
+          faceAlt="Proofify Africa, l'interface posée sur la plaque du haut"
+          hero={
+            <>
+              <h1 id="hero-title">De la base de données à l&rsquo;écran.</h1>
+              <p className="lead hero__lead">
+                Développeur full-stack au Bénin : Laravel, Next.js, Vue.js et PostgreSQL en production.
               </p>
-              <dl className="facts">
-                <div>
-                  <dt>Basé à</dt>
-                  <dd>{person.place}</dd>
-                </div>
-                <div>
-                  <dt>Formation</dt>
-                  <dd>Licence TIC, IMSP</dd>
-                </div>
-                <div>
-                  <dt>Langues</dt>
-                  <dd>Français, anglais professionnel</dd>
-                </div>
-              </dl>
+              <div className="hero__actions">
+                <a className="btn btn--primary" href={`mailto:${person.email}`}>
+                  Me confier un projet
+                </a>
+                <a className="btn" href="#projets">
+                  Voir les projets
+                </a>
+              </div>
+            </>
+          }
+          intro={
+            <h2 id="anatomy-title" className="anatomy__title">
+              Un SaaS, démonté pièce par pièce.
+            </h2>
+          }
+        />
+
+        <section className="section projects" id="projets" aria-labelledby="projets-title">
+          <div className="container">
+            <div className="head">
+              <h2 id="projets-title">Cinq projets, quatre démos en ligne.</h2>
+              <p className="lead head__lead">Chaque capture vient de la version en ligne.</p>
             </div>
+            <ul className="panels projects__grid">
+              {projects.map((p, i) => (
+                <li key={p.slug} className={i === 0 ? "project project--lead" : "project"}>
+                  <div className="project__shot" data-slot={`work-${p.slug}`} data-kind="product" data-alt={`Capture de ${p.name}`}>
+                    <Image
+                      src={p.image}
+                      alt={p.alt}
+                      fill
+                      sizes={i === 0 ? "(min-width: 60rem) 56vw, 100vw" : "(min-width: 60rem) 30vw, 100vw"}
+                      style={{ objectPosition: "50% 0%" }}
+                    />
+                  </div>
+                  <div className="project__body">
+                    <div className="project__top">
+                      <h3>{p.name}</h3>
+                      <span className="measured project__year">{p.year}</span>
+                    </div>
+                    <p className="project__kind">{p.kind}</p>
+                    {i === 0 && <p className="project__line">{p.line}</p>}
+                    <p className="project__stack">{p.stack.join(", ")}</p>
+                    <p className="project__links">
+                      {p.demo && (
+                        <a className="link" href={p.demo} target="_blank" rel="noreferrer">
+                          Ouvrir la démo
+                        </a>
+                      )}
+                      {p.code && (
+                        <a className="link" href={p.code} target="_blank" rel="noreferrer">
+                          Lire le code
+                        </a>
+                      )}
+                    </p>
+                  </div>
+                </li>
+              ))}
+            </ul>
           </div>
         </section>
 
-        <section className="section band" id="parcours" aria-labelledby="parcours-title">
-          <div className="container">
-            <h2 id="parcours-title" className="section__head">
-              Du lycée technique à la production.
+        <section className="reading-band" aria-labelledby="reading-title">
+          <div className="container reading">
+            <h2 id="reading-title" className="visually-hidden">
+              Plus de 500 votes sur Miss Prépa
             </h2>
-            <ol className="stages set">
-              {stages.map((s, i) => (
-                <li key={s.name} className={i === stages.length - 1 ? "stage stage--next" : "stage"}>
-                  <h3 className="stage__name">{s.name}</h3>
-                  <p className="stage__when">{s.when}</p>
-                  <p className="stage__line">{s.line}</p>
+            <p className="reading__value measured">
+              500+<span className="reading__unit">votes</span>
+            </p>
+            <dl className="reading__record">
+              <div>
+                <dt>Projet</dt>
+                <dd className="is-person">Miss Prépa, conçu et livré par Ibrahim</dd>
+              </div>
+              <div>
+                <dt>Quand</dt>
+                <dd className="measured is-instrument">2025</dd>
+              </div>
+              <div>
+                <dt>Quoi</dt>
+                <dd>L&rsquo;élection de l&rsquo;IMSP, votée en ligne, résultats affichés en direct.</dd>
+              </div>
+            </dl>
+          </div>
+        </section>
+
+        <section className="section registry" id="registre" aria-labelledby="registre-title">
+          <div className="container registry__grid">
+            <div className="registry__head">
+              <h2 id="registre-title">Le registre, depuis 2020.</h2>
+              <p className="lead">Du lycée technique au code en production.</p>
+            </div>
+            <ol className="trail">
+              {trail.map((t) => (
+                <li key={t.when} className={t.next ? "trail__row trail__row--next" : "trail__row"}>
+                  <span className="trail__when measured">{t.when}</span>
+                  <span className="trail__what">{t.what}</span>
+                  <span className="trail__where">{t.where}</span>
                 </li>
               ))}
             </ol>
           </div>
         </section>
 
-        <section className="section tools" id="outils" aria-labelledby="outils-title">
-          <div className="container">
-            <h2 id="outils-title" className="section__head">
-              Les outils, couche par couche.
-            </h2>
-            <LayerSwitcher layers={layers} />
-          </div>
-        </section>
-
         <section className="section contact" id="contact" aria-labelledby="contact-title">
-          <div className="container contact__grid">
-            <div className="contact__text">
-              <h2 id="contact-title">Parlons de votre produit.</h2>
-              <a className="contact__mail" href={`mailto:${person.email}`}>
-                {person.email}
-              </a>
-              <dl className="facts">
-                <div>
-                  <dt>Téléphone</dt>
-                  <dd>
-                    <a className="link" href={person.phoneHref}>
-                      {person.phone}
-                    </a>
-                  </dd>
-                </div>
-                <div>
-                  <dt>GitHub</dt>
-                  <dd>
-                    <a className="link" href={person.github} target="_blank" rel="noreferrer">
-                      Adebola-A13
-                    </a>
-                  </dd>
-                </div>
-                <div>
-                  <dt>LinkedIn</dt>
-                  <dd>
-                    <a className="link" href={person.linkedin} target="_blank" rel="noreferrer">
-                      adehan-ibrahim
-                    </a>
-                  </dd>
-                </div>
-                <div>
-                  <dt>Disponibilité</dt>
-                  <dd>Télétravail complet, horaires flexibles</dd>
-                </div>
-              </dl>
-            </div>
-            <figure className="contact__photo crop crop--sheet">
-              <div className="frame" data-slot="at-work" data-alt="Ibrahim Adehan au travail">
-                <Image
-                  src={atWork}
-                  alt="Ibrahim Adehan devant son ordinateur portable"
-                  fill
-                  sizes="(min-width: 60rem) 30vw, 100vw"
-                  style={{ objectPosition: "50% 30%" }}
-                />
+          <div className="container">
+            <div className="panels contact__panels">
+              <div className="contact__main">
+                <h2 id="contact-title">Parlons de votre produit.</h2>
+                <a className="contact__mail" href={`mailto:${person.email}`}>
+                  {person.email}
+                </a>
+                <dl className="contact__facts">
+                  <div>
+                    <dt>Téléphone</dt>
+                    <dd>
+                      <a className="link measured" href={person.phoneHref}>
+                        {person.phone}
+                      </a>
+                    </dd>
+                  </div>
+                  <div>
+                    <dt>Basé à</dt>
+                    <dd>{person.place}</dd>
+                  </div>
+                  <div>
+                    <dt>Disponibilité</dt>
+                    <dd>Télétravail complet, horaires flexibles</dd>
+                  </div>
+                  <div>
+                    <dt>Langues</dt>
+                    <dd>Français, anglais professionnel</dd>
+                  </div>
+                </dl>
               </div>
-            </figure>
+              <figure className="contact__portrait">
+                <div className="contact__photo" data-slot="portrait" data-alt="Portrait d'Ibrahim Adehan">
+                  <Image
+                    src={portrait}
+                    alt="Ibrahim Adehan en costume, la main au menton"
+                    fill
+                    sizes="(min-width: 60rem) 28vw, 100vw"
+                    style={{ objectPosition: "50% 8%" }}
+                  />
+                </div>
+                <figcaption>Ibrahim Adehan, Abomey-Calavi</figcaption>
+              </figure>
+            </div>
           </div>
         </section>
       </main>
 
-      <footer className="colophon">
-        <div className="container colophon__inner">
-          <p className="colophon__text">
-            {person.fullName}, développeur full-stack à {person.place}. Site construit avec Next.js, composé en
-            Hedvig Letters Serif et Geist.
-          </p>
-          <p className="colophon__legal">
-            <span className="num">2026</span>, Ibrahim Adehan
+      <footer className="foot">
+        <div className="container">
+          <div className="foot__cols">
+            <div>
+              <p className="foot__title">Pages</p>
+              <ul>
+                <li><a href="#projets">Projets</a></li>
+                <li><a href="#registre">Parcours</a></li>
+                <li><a href="/studio">Version Studio</a></li>
+              </ul>
+            </div>
+            <div>
+              <p className="foot__title">Code et profil</p>
+              <ul>
+                <li><a href={person.github} target="_blank" rel="noreferrer">GitHub</a></li>
+                <li><a href={person.linkedin} target="_blank" rel="noreferrer">LinkedIn</a></li>
+              </ul>
+            </div>
+            <div>
+              <p className="foot__title">Contact</p>
+              <ul>
+                <li><a href={`mailto:${person.email}`}>{person.email}</a></li>
+                <li><a href={person.phoneHref}>{person.phone}</a></li>
+              </ul>
+            </div>
+          </div>
+          <p className="foot__legal">
+            {person.fullName}, développeur full-stack. <span className="measured">2026</span>
           </p>
         </div>
       </footer>
-    </>
+    </div>
   );
 }

@@ -1,5 +1,30 @@
 [
  {
+  "shape": "pinned exploded view",
+  "theme": "console",
+  "axes": "dark/grotesk-sans/chromatic-amber",
+  "hero": "stage",
+  "nav": "floating pill",
+  "footer": "index columns",
+  "imagery": "screenshots 5 as product, user portrait duotone",
+  "photos": [],
+  "entry": "exploded SaaS stack",
+  "fingerprint": "stage/pinned/panels/reading/trail/panels",
+  "sections": [
+   "hero + pinned exploded view",
+   "panels (projects)",
+   "reading (500+ votes)",
+   "trail (registry)",
+   "panels (contact)",
+   "index columns"
+  ],
+  "signature": "one SaaS taken apart like a watch movement, scroll-linked",
+  "waived": [],
+  "prompt": "portfolio full-stack, animation pro et chill",
+  "date": "2026-10-31",
+  "mode": "build"
+ },
+ {
   "shape": "narrative-workflow",
   "theme": "studio",
   "axes": "light/roman-serif/warm",

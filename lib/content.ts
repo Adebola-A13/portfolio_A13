@@ -118,6 +118,43 @@ export const stages = [
   },
 ];
 
+// The exploded view on / (Console): one SaaS taken apart, top plate first.
+export const strata = [
+  {
+    id: "interface",
+    name: "Interface",
+    tools: ["Next.js", "React", "Vue.js", "Tailwind CSS"],
+    line: "Les écrans que vos clients touchent. Vue.js en production chez Alibora, Next.js derrière Proofify Africa.",
+  },
+  {
+    id: "api",
+    name: "API et logique",
+    tools: ["Laravel", "Node.js", "API REST"],
+    line: "Les règles métier côté serveur. Le module de facturation de Korva tourne sur Laravel.",
+  },
+  {
+    id: "data",
+    name: "Données",
+    tools: ["PostgreSQL", "MySQL", "Supabase"],
+    line: "PostgreSQL derrière Korva et AviProfit, Supabase derrière Proofify Africa.",
+  },
+  {
+    id: "infra",
+    name: "Livraison",
+    tools: ["GitHub", "Vercel", "Docker", "Linux"],
+    line: "Pull requests et revues de code sur GitHub, puis la mise en ligne. Les quatre démos tournent sur Vercel.",
+  },
+];
+
+export const trail = [
+  { when: "2020", what: "CAP", where: "Lycée Professionnel Coulibaly, Missebo" },
+  { when: "2022", what: "DTI-FM et Bac E", where: "Lycée Professionnel Coulibaly, Missebo" },
+  { when: "2025", what: "Licence TIC", where: "IMSP, Dangbo" },
+  { when: "06.2025", what: "Stage front-end, Vue.js", where: "Inov Service, Akpakpa" },
+  { when: "09.2025", what: "Développeur full-stack", where: "Alibora, Houéyiho" },
+  { when: "Ensuite", what: "Ingénierie IA", where: "Claude et ChatGPT au quotidien, chaque ligne relue", next: true },
+];
+
 export const layers = [
   {
     id: "front",

@@ -1,13 +1,29 @@
 import type { Metadata } from "next";
-import { Geist, Hedvig_Letters_Serif } from "next/font/google";
+import { Atkinson_Hyperlegible_Mono, Geist, Hedvig_Letters_Serif, Host_Grotesk } from "next/font/google";
 import favicon from "@/images/favicon.png";
-import "./globals.css";
 
+// Console (/) faces
+const host = Host_Grotesk({
+  subsets: ["latin", "latin-ext"],
+  weight: ["400", "500"],
+  display: "swap",
+  variable: "--font-host",
+});
+
+const atkinsonMono = Atkinson_Hyperlegible_Mono({
+  subsets: ["latin", "latin-ext"],
+  weight: ["400", "500"],
+  display: "swap",
+  variable: "--font-atkinson",
+});
+
+// Studio (/studio) faces
 const hedvig = Hedvig_Letters_Serif({
   subsets: ["latin", "latin-ext"],
   weight: "variable",
   axes: ["opsz"],
   display: "swap",
+  preload: false,
   variable: "--font-hedvig",
 });
 
@@ -15,6 +31,7 @@ const geist = Geist({
   subsets: ["latin", "latin-ext"],
   weight: ["400", "500"],
   display: "swap",
+  preload: false,
   variable: "--font-geist",
 });
 
@@ -33,7 +50,10 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="fr" className={`${hedvig.variable} ${geist.variable}`}>
+    <html
+      lang="fr"
+      className={`${host.variable} ${atkinsonMono.variable} ${hedvig.variable} ${geist.variable}`}
+    >
       <body>{children}</body>
     </html>
   );
