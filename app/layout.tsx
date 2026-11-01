@@ -14,6 +14,9 @@ const atkinsonMono = Atkinson_Hyperlegible_Mono({
   subsets: ["latin", "latin-ext"],
   weight: ["400", "500"],
   display: "swap",
+  // Next.js has no metric overrides for this face; skip the fallback it cannot build.
+  adjustFontFallback: false,
+  fallback: ["ui-monospace", "monospace"],
   variable: "--font-atkinson",
 });
 
