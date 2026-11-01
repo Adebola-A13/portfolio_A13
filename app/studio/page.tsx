@@ -4,7 +4,7 @@ import { Wordmark } from "@/components/Wordmark";
 import { WorkIndex } from "@/components/WorkIndex";
 import { LayerSwitcher } from "@/components/LayerSwitcher";
 import { layers, person, projects, stages } from "@/lib/content";
-import portrait from "@/images/photo.jpeg";
+import portrait from "@/images/portrait.png";
 import atWork from "@/images/photo_2.jpeg";
 import "../globals.css";
 
@@ -74,10 +74,10 @@ export default function StudioPage() {
               <div className="frame" data-slot="portrait" data-alt="Portrait d'Ibrahim Adehan">
                 <Image
                   src={portrait}
-                  alt="Ibrahim Adehan en veste noire sur fond gris"
+                  alt="Ibrahim Adehan en costume, la main au menton"
                   fill
                   sizes="(min-width: 60rem) 34vw, 100vw"
-                  style={{ objectPosition: "50% 20%" }}
+                  style={{ objectPosition: "50% 0%" }}
                 />
               </div>
             </figure>
